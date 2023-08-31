@@ -1,0 +1,26 @@
+lockfileVersion: '6.0'
+
+dependencies:
+  '@rescript/core':
+    specifier: ^0.5.0
+    version: 0.5.0(rescript@11.0.0-rc.2)
+  rescript:
+    specifier: 11.0.0-rc.2
+    version: 11.0.0-rc.2
+
+packages:
+
+  /@rescript/core@0.5.0(rescript@11.0.0-rc.2):
+    resolution: {integrity: sha512-Keqnpi+8VqyhCk/3aMwar8hJbNy2IsINAAfIFeQC65IIegCR0QXFDBpQxfVcmbbtoHq6HnW4B3RLm/9GCUJQhQ==}
+    peerDependencies:
+      rescript: ^10.1.0 || ^11.0.0-alpha.0 || next
+    dependencies:
+      rescript: 11.0.0-rc.2
+    dev: false
+
+  /rescript@11.0.0-rc.2:
+    resolution: {integrity: sha512-NNRxTJTW9NKtao6VmxdGyQfluZf36MAmGsWUp4a7Vkar4xF+xpKUjegS0c76VMOQ7fs3PCOoc5ODg4BW1TvZOA==}
+    engines: {node: '>=10'}
+    hasBin: true
+    requiresBuild: true
+    dev: false
