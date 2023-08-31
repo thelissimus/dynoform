@@ -25,8 +25,8 @@ type element =
       options: array<selectOption>,
       meta: elementMeta,
     })
-  | Photo({file: option<Webapi.File.t>, mime: option<string>, meta: elementMeta})
-  | PhotoRequired({file: Webapi.File.t, mime: string, meta: elementMeta})
+  | Photo({file: option<Webapi.File.t>, meta: elementMeta})
+  | PhotoRequired({file: Webapi.File.t, meta: elementMeta})
   | Checkbox({checked: bool, meta: elementMeta})
   | Text({content: option<string>, meta: elementMeta})
   | TextRequired({content: string, meta: elementMeta})
@@ -36,5 +36,5 @@ type element =
   | NumberRequired({number: float, meta: elementMeta})
   | Date({date: option<Js.Date.t>, meta: elementMeta})
   | DateRequired({date: Js.Date.t, meta: elementMeta})
-  | File({file: option<Webapi.File.t>, mime: option<string>, meta: elementMeta})
-  | FileRequired({file: Webapi.File.t, mime: string, meta: elementMeta})
+  | File({file: option<Webapi.File.t>, meta: elementMeta})
+  | FileRequired({file: Webapi.File.t, meta: elementMeta})
