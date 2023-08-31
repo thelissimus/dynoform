@@ -3,24 +3,30 @@ lockfileVersion: '6.0'
 dependencies:
   '@rescript/core':
     specifier: ^0.5.0
-    version: 0.5.0(rescript@11.0.0-rc.2)
+    version: 0.5.0(rescript@10.1.4)
   rescript:
-    specifier: 11.0.0-rc.2
-    version: 11.0.0-rc.2
+    specifier: ^10.1.4
+    version: 10.1.4
+  rescript-webapi:
+    specifier: ^0.8.0
+    version: 0.8.0
 
 packages:
 
-  /@rescript/core@0.5.0(rescript@11.0.0-rc.2):
+  /@rescript/core@0.5.0(rescript@10.1.4):
     resolution: {integrity: sha512-Keqnpi+8VqyhCk/3aMwar8hJbNy2IsINAAfIFeQC65IIegCR0QXFDBpQxfVcmbbtoHq6HnW4B3RLm/9GCUJQhQ==}
     peerDependencies:
       rescript: ^10.1.0 || ^11.0.0-alpha.0 || next
     dependencies:
-      rescript: 11.0.0-rc.2
+      rescript: 10.1.4
     dev: false
 
-  /rescript@11.0.0-rc.2:
-    resolution: {integrity: sha512-NNRxTJTW9NKtao6VmxdGyQfluZf36MAmGsWUp4a7Vkar4xF+xpKUjegS0c76VMOQ7fs3PCOoc5ODg4BW1TvZOA==}
-    engines: {node: '>=10'}
+  /rescript-webapi@0.8.0:
+    resolution: {integrity: sha512-PdjHqho8+kI7AIC3DlLgD99H8zzHphzpIhyv2skVtWaSJGK819+ZqWMC3mHEtSjlcFoYaLXliNt8sb6Taa2Mpg==}
+    dev: false
+
+  /rescript@10.1.4:
+    resolution: {integrity: sha512-FFKlS9AG/XrLepWsyw7B+A9DtQBPWEPDPDKghV831Y2KGbie+eeFBOS0xtRHp0xbt7S0N2Dm6hhX+kTZQ/3Ybg==}
     hasBin: true
     requiresBuild: true
     dev: false
