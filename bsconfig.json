@@ -12,7 +12,7 @@
 			"in-source": true
 		}
 	],
-	"suffix": ".bs.js",
+	"suffix": ".bs.mjs",
 	"bsc-flags": ["-open RescriptCore"],
 	"bs-dependencies": ["@rescript/core", "rescript-webapi"]
 }
