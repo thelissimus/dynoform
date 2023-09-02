@@ -12,7 +12,8 @@
 			"in-source": true
 		}
 	],
+	"jsx": { "version": 4, "mode": "classic" },
 	"suffix": ".bs.mjs",
 	"bsc-flags": ["-open RescriptCore"],
-	"bs-dependencies": ["@rescript/core", "rescript-webapi"]
+	"bs-dependencies": ["@rescript/core", "@rescript/react", "rescript-webapi"]
 }
