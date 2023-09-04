@@ -29,8 +29,8 @@ let elementMetaCodec = S.object(o => {
 
 let element = S.union([
   S.object(o => {
-    o->S.field("kind", S.literal(String("SelectSingle")))->ignore
-    SelectSingle({
+    o->S.field("kind", S.literal(String("SelectSingleOptional")))->ignore
+    SelectSingleOptional({
       selected: o->S.field("selected", S.option(S.string())),
       placeholder: o->S.field("placeholder", S.string()),
       options: o->S.field("options", S.array(selectOptionCodec)),
@@ -38,9 +38,18 @@ let element = S.union([
     })
   }),
   S.object(o => {
-    o->S.field("kind", S.literal(String("SelectSingleRequired")))->ignore
-    SelectSingleRequired({
+    o->S.field("kind", S.literal(String("SelectSingle")))->ignore
+    SelectSingle({
       selected: o->S.field("selected", S.string()),
+      placeholder: o->S.field("placeholder", S.string()),
+      options: o->S.field("options", S.array(selectOptionCodec)),
+      meta: o->S.field("meta", elementMetaCodec),
+    })
+  }),
+  S.object(o => {
+    o->S.field("kind", S.literal(String("SelectMultipleOptional")))->ignore
+    SelectMultipleOptional({
+      selected: o->S.field("selected", S.array(S.string())),
       placeholder: o->S.field("placeholder", S.string()),
       options: o->S.field("options", S.array(selectOptionCodec)),
       meta: o->S.field("meta", elementMetaCodec),
@@ -49,15 +58,6 @@ let element = S.union([
   S.object(o => {
     o->S.field("kind", S.literal(String("SelectMultiple")))->ignore
     SelectMultiple({
-      selected: o->S.field("selected", S.array(S.string())),
-      placeholder: o->S.field("placeholder", S.string()),
-      options: o->S.field("options", S.array(selectOptionCodec)),
-      meta: o->S.field("meta", elementMetaCodec),
-    })
-  }),
-  S.object(o => {
-    o->S.field("kind", S.literal(String("SelectMultipleRequired")))->ignore
-    SelectMultipleRequired({
       selected: o->S.field("selected", S.array(S.string())->arrayToNonEmptyArray),
       placeholder: o->S.field("placeholder", S.string()),
       options: o->S.field("options", S.array(selectOptionCodec)),
@@ -72,17 +72,25 @@ let element = S.union([
     })
   }),
   S.object(o => {
-    o->S.field("kind", S.literal(String("Text")))->ignore
-    Text({
+    o->S.field("kind", S.literal(String("TextOptional")))->ignore
+    TextOptional({
       content: o->S.field("content", S.option(S.string())),
       placeholder: o->S.field("placeholder", S.string()),
       meta: o->S.field("meta", elementMetaCodec),
     })
   }),
   S.object(o => {
-    o->S.field("kind", S.literal(String("TextRequired")))->ignore
-    TextRequired({
+    o->S.field("kind", S.literal(String("Text")))->ignore
+    Text({
       content: o->S.field("content", S.string()),
+      placeholder: o->S.field("placeholder", S.string()),
+      meta: o->S.field("meta", elementMetaCodec),
+    })
+  }),
+  S.object(o => {
+    o->S.field("kind", S.literal(String("TextareaOptional")))->ignore
+    TextareaOptional({
+      content: o->S.field("content", S.option(S.string())),
       placeholder: o->S.field("placeholder", S.string()),
       meta: o->S.field("meta", elementMetaCodec),
     })
@@ -90,15 +98,15 @@ let element = S.union([
   S.object(o => {
     o->S.field("kind", S.literal(String("Textarea")))->ignore
     Textarea({
-      content: o->S.field("content", S.option(S.string())),
+      content: o->S.field("content", S.string()),
       placeholder: o->S.field("placeholder", S.string()),
       meta: o->S.field("meta", elementMetaCodec),
     })
   }),
   S.object(o => {
-    o->S.field("kind", S.literal(String("TextareaRequired")))->ignore
-    TextareaRequired({
-      content: o->S.field("content", S.string()),
+    o->S.field("kind", S.literal(String("NumberOptional")))->ignore
+    NumberOptional({
+      number: o->S.field("number", S.option(S.float())),
       placeholder: o->S.field("placeholder", S.string()),
       meta: o->S.field("meta", elementMetaCodec),
     })
@@ -106,15 +114,15 @@ let element = S.union([
   S.object(o => {
     o->S.field("kind", S.literal(String("Number")))->ignore
     Number({
-      number: o->S.field("number", S.option(S.float())),
+      number: o->S.field("number", S.float()),
       placeholder: o->S.field("placeholder", S.string()),
       meta: o->S.field("meta", elementMetaCodec),
     })
   }),
   S.object(o => {
-    o->S.field("kind", S.literal(String("NumberRequired")))->ignore
-    NumberRequired({
-      number: o->S.field("number", S.float()),
+    o->S.field("kind", S.literal(String("DateOptional")))->ignore
+    DateOptional({
+      date: o->S.field("date", S.option(S.string()->S.String.datetime())),
       placeholder: o->S.field("placeholder", S.string()),
       meta: o->S.field("meta", elementMetaCodec),
     })
@@ -122,14 +130,6 @@ let element = S.union([
   S.object(o => {
     o->S.field("kind", S.literal(String("Date")))->ignore
     Date({
-      date: o->S.field("date", S.option(S.string()->S.String.datetime())),
-      placeholder: o->S.field("placeholder", S.string()),
-      meta: o->S.field("meta", elementMetaCodec),
-    })
-  }),
-  S.object(o => {
-    o->S.field("kind", S.literal(String("DateRequired")))->ignore
-    DateRequired({
       date: o->S.field("date", S.string()->S.String.datetime()),
       placeholder: o->S.field("placeholder", S.string()),
       meta: o->S.field("meta", elementMetaCodec),
