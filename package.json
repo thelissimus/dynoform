@@ -13,6 +13,7 @@
     "@rescript/react": "^0.11.0",
     "react": "^18.2.0",
     "rescript": "11.0.0-rc.2",
+    "rescript-struct": "^4.1.1",
     "rescript-webapi": "^0.9.0"
   }
 }
