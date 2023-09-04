@@ -38,3 +38,10 @@ type element =
   | DateRequired({date: Js.Date.t, meta: elementMeta})
   | File({file: option<Webapi.File.t>, meta: elementMeta})
   | FileRequired({file: Webapi.File.t, meta: elementMeta})
+
+type group = {
+  status: status,
+  name: string,
+  description: string,
+  elements: array<element>,
+}
