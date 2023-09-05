@@ -1,0 +1,7 @@
+{
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.patterns": {
+		"*.res": "${capture}.resi, ${capture}.bs.mjs",
+		"package.json": "pnpm-lock.yaml"
+	}
+}
