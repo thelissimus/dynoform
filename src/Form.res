@@ -128,12 +128,8 @@ module Data = {
 }
 
 module Blueprint = {
-  type status =
-    | Active
-    | Inactive
-
   type meta = {
-    status: status,
+    enabled: bool,
     name: string,
     title: string,
     description: string,
@@ -168,13 +164,8 @@ module Blueprint = {
   module Codec = {
     open RescriptStruct
 
-    let status = S.union([
-      S.literalVariant(String("active"), Active),
-      S.literalVariant(String("inactive"), Inactive),
-    ])
-
     let meta = S.object(o => {
-      status: o->S.field("status", status),
+      enabled: o->S.field("enabled", S.bool()),
       name: o->S.field("name", S.string()),
       title: o->S.field("title", S.string()),
       description: o->S.field("description", S.string()),

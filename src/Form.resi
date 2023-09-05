@@ -31,12 +31,8 @@ module Data: {
 module Blueprint: {
   open RescriptStruct
 
-  type status =
-    | Active
-    | Inactive
-
   type meta = {
-    status: status,
+    enabled: bool,
     name: string,
     title: string,
     description: string,
@@ -68,7 +64,6 @@ module Blueprint: {
     | FileOptional({accept: array<string>, meta: meta})
 
   module Codec: {
-    let status: S.t<status>
     let meta: S.t<meta>
     let selectOption: S.t<selectOption>
     let t: S.t<t>
