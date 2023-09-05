@@ -61,3 +61,9 @@ module Blueprint: {
     let t: S.t<t>
   }
 }
+
+module type Interpreter = {
+  type t
+
+  let interpret: Blueprint.t => t
+}

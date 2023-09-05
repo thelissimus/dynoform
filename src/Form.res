@@ -226,3 +226,9 @@ module Blueprint = {
     ])
   }
 }
+
+module type Interpreter = {
+  type t
+
+  let interpret: Blueprint.t => t
+}
