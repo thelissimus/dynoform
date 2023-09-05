@@ -129,11 +129,11 @@ module Data = {
 
 module Blueprint = {
   type meta = {
-    enabled: bool,
     name: string,
-    title: string,
+    label: string,
     description: string,
     mustConfirm: bool,
+    required: bool,
   }
 
   type selectOption = {
@@ -141,35 +141,26 @@ module Blueprint = {
     value: string,
   }
 
-  // TODO: `XOptional` OR `X({ ..., required: bool })`
   type t =
     | SelectSingle({placeholder: string, options: array<selectOption>, meta: meta})
-    | SelectSingleOptional({placeholder: string, options: array<selectOption>, meta: meta})
     | SelectMultiple({placeholder: string, options: array<selectOption>, meta: meta})
-    | SelectMultipleOptional({placeholder: string, options: array<selectOption>, meta: meta})
     | Checkbox({meta: meta})
     | Text({placeholder: string, meta: meta})
-    | TextOptional({placeholder: string, meta: meta})
     | Textarea({placeholder: string, meta: meta})
-    | TextareaOptional({placeholder: string, meta: meta})
     | Number({placeholder: string, meta: meta})
-    | NumberOptional({placeholder: string, meta: meta})
     | Date({placeholder: string, meta: meta})
-    | DateOptional({placeholder: string, meta: meta})
     | Photo({meta: meta})
-    | PhotoOptional({meta: meta})
     | File({accept: array<string>, meta: meta})
-    | FileOptional({accept: array<string>, meta: meta})
 
   module Codec = {
     open RescriptStruct
 
     let meta = S.object(o => {
-      enabled: o->S.field("enabled", S.bool()),
       name: o->S.field("name", S.string()),
-      title: o->S.field("title", S.string()),
+      label: o->S.field("label", S.string()),
       description: o->S.field("description", S.string()),
       mustConfirm: o->S.field("mustConfirm", S.bool()),
+      required: o->S.field("required", S.bool()),
     })->S.Object.strict
 
     let selectOption = S.object(o => {
@@ -190,24 +181,8 @@ module Blueprint = {
         })
       }),
       S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectSingleOptional")))->ignore
-        SelectSingleOptional({
-          placeholder: o->S.field("placeholder", S.string()),
-          options: o->S.field("options", S.array(selectOption)),
-          meta: o->S.field("meta", meta),
-        })
-      }),
-      S.object(o => {
         o->S.field(discriminator, S.literal(String("SelectMultiple")))->ignore
         SelectMultiple({
-          placeholder: o->S.field("placeholder", S.string()),
-          options: o->S.field("options", S.array(selectOption)),
-          meta: o->S.field("meta", meta),
-        })
-      }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectMultipleOptional")))->ignore
-        SelectMultipleOptional({
           placeholder: o->S.field("placeholder", S.string()),
           options: o->S.field("options", S.array(selectOption)),
           meta: o->S.field("meta", meta),
@@ -227,22 +202,8 @@ module Blueprint = {
         })
       }),
       S.object(o => {
-        o->S.field(discriminator, S.literal(String("TextOptional")))->ignore
-        TextOptional({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
-        })
-      }),
-      S.object(o => {
         o->S.field(discriminator, S.literal(String("Textarea")))->ignore
         Textarea({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
-        })
-      }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("TextareaOptional")))->ignore
-        TextareaOptional({
           placeholder: o->S.field("placeholder", S.string()),
           meta: o->S.field("meta", meta),
         })
@@ -255,22 +216,8 @@ module Blueprint = {
         })
       }),
       S.object(o => {
-        o->S.field(discriminator, S.literal(String("NumberOptional")))->ignore
-        NumberOptional({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
-        })
-      }),
-      S.object(o => {
         o->S.field(discriminator, S.literal(String("Date")))->ignore
         Date({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
-        })
-      }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("DateOptional")))->ignore
-        DateOptional({
           placeholder: o->S.field("placeholder", S.string()),
           meta: o->S.field("meta", meta),
         })

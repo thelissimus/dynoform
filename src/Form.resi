@@ -32,11 +32,11 @@ module Blueprint: {
   open RescriptStruct
 
   type meta = {
-    enabled: bool,
     name: string,
-    title: string,
+    label: string,
     description: string,
     mustConfirm: bool,
+    required: bool,
   }
 
   type selectOption = {
@@ -46,22 +46,14 @@ module Blueprint: {
 
   type t =
     | SelectSingle({placeholder: string, options: array<selectOption>, meta: meta})
-    | SelectSingleOptional({placeholder: string, options: array<selectOption>, meta: meta})
     | SelectMultiple({placeholder: string, options: array<selectOption>, meta: meta})
-    | SelectMultipleOptional({placeholder: string, options: array<selectOption>, meta: meta})
     | Checkbox({meta: meta})
     | Text({placeholder: string, meta: meta})
-    | TextOptional({placeholder: string, meta: meta})
     | Textarea({placeholder: string, meta: meta})
-    | TextareaOptional({placeholder: string, meta: meta})
     | Number({placeholder: string, meta: meta})
-    | NumberOptional({placeholder: string, meta: meta})
     | Date({placeholder: string, meta: meta})
-    | DateOptional({placeholder: string, meta: meta})
     | Photo({meta: meta})
-    | PhotoOptional({meta: meta})
     | File({accept: array<string>, meta: meta})
-    | FileOptional({accept: array<string>, meta: meta})
 
   module Codec: {
     let meta: S.t<meta>
