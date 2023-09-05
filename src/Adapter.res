@@ -1,4 +1,4 @@
-module ForReact: Form.Interpreter = {
+module ForReact: Form.Interpreter with type t = React.element = {
   open Form.Blueprint
 
   type t = React.element
@@ -10,7 +10,9 @@ module ForReact: Form.Interpreter = {
         <label htmlFor=name> {label->React.string} </label>
         <select name multiple=false required>
           {options
-          ->Belt.Array.mapWithIndexU((i, {label, value}) => <option label value key={i->Int.toString} />)
+          ->Belt.Array.mapWithIndexU((i, {label, value}) =>
+            <option label value key={i->Int.toString} />
+          )
           ->Belt.Array.concat([
             <option label=placeholder selected=true disabled=true hidden=true key="default" />,
           ])
@@ -23,7 +25,9 @@ module ForReact: Form.Interpreter = {
         <label htmlFor=name> {label->React.string} </label>
         <select name multiple=true required>
           {options
-          ->Belt.Array.mapWithIndexU((i, {label, value}) => <option label value key={i->Int.toString} />)
+          ->Belt.Array.mapWithIndexU((i, {label, value}) =>
+            <option label value key={i->Int.toString} />
+          )
           ->Belt.Array.concat([
             <option label=placeholder selected=true disabled=true hidden=true key="default" />,
           ])
