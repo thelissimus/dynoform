@@ -20,6 +20,11 @@ module Data = {
     | File({file: Webapi.File.t, meta: meta})
     | FileOptional({file: option<Webapi.File.t>, meta: meta})
 
+  type group = {
+    name: string,
+    values: array<t>,
+  }
+
   module Codec = {
     open RescriptStruct
 
@@ -124,6 +129,11 @@ module Data = {
       }),
       // TODO: Photo, File
     ])
+
+    let group = S.object(o => {
+      name: o->S.field("name", S.string()),
+      values: o->S.field("values", S.array(t))
+    })
   }
 }
 
@@ -151,6 +161,13 @@ module Blueprint = {
     | Date({placeholder: string, meta: meta})
     | Photo({meta: meta})
     | File({accept: array<string>, meta: meta})
+
+  type group = {
+    name: string,
+    order: int,
+    description: string,
+    elements: NonEmptyArray.t<t>,
+  }
 
   module Codec = {
     open RescriptStruct
@@ -224,6 +241,13 @@ module Blueprint = {
       }),
       // TODO: Photo, File
     ])
+
+    let group = S.object(o => {
+      name: o->S.field("name", S.string()),
+      order: o->S.field("order", S.int()),
+      description: o->S.field("description", S.string()),
+      elements: o->S.field("elements", S.array(t)->NonEmptyArray.Codec.array)
+    })->S.Object.strict
   }
 }
 

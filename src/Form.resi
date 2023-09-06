@@ -22,9 +22,15 @@ module Data: {
     | File({file: Webapi.File.t, meta: meta})
     | FileOptional({file: option<Webapi.File.t>, meta: meta})
 
+  type group = {
+    name: string,
+    values: array<t>,
+  }
+
   module Codec: {
     let meta: S.t<meta>
     let t: S.t<t>
+    let group: S.t<group>
   }
 }
 
@@ -55,10 +61,18 @@ module Blueprint: {
     | Photo({meta: meta})
     | File({accept: array<string>, meta: meta})
 
+  type group = {
+    name: string,
+    order: int,
+    description: string,
+    elements: NonEmptyArray.t<t>,
+  }
+
   module Codec: {
     let meta: S.t<meta>
     let selectOption: S.t<selectOption>
     let t: S.t<t>
+    let group: S.t<group>
   }
 }
 
