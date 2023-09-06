@@ -92,5 +92,5 @@ module Blueprint: {
 module type Interpreter = {
   type output
 
-  let interpret: Blueprint.element => output
+  let interpret: Blueprint.form => output
 }
