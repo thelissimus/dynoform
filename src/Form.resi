@@ -27,10 +27,16 @@ module Data: {
     elements: array<element>,
   }
 
+  type form = {
+    name: string,
+    groups: array<group>,
+  }
+
   module Codec: {
     let meta: S.t<meta>
     let element: S.t<element>
     let group: S.t<group>
+    let form: S.t<form>
   }
 }
 
@@ -68,11 +74,18 @@ module Blueprint: {
     elements: NonEmptyArray.t<element>,
   }
 
+  type form = {
+    name: string,
+    description: string,
+    groups: NonEmptyArray.t<group>,
+  }
+
   module Codec: {
     let meta: S.t<meta>
     let selectOption: S.t<selectOption>
     let element: S.t<element>
     let group: S.t<group>
+    let form: S.t<form>
   }
 }
 

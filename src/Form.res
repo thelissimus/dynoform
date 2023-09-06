@@ -25,6 +25,11 @@ module Data = {
     elements: array<element>,
   }
 
+  type form = {
+    name: string,
+    groups: array<group>,
+  }
+
   module Codec = {
     open RescriptStruct
 
@@ -132,8 +137,13 @@ module Data = {
 
     let group = S.object(o => {
       name: o->S.field("name", S.string()),
-      elements: o->S.field("elements", S.array(element))
-    })
+      elements: o->S.field("elements", S.array(element)),
+    })->S.Object.strict
+
+    let form = S.object(o => {
+      name: o->S.field("name", S.string()),
+      groups: o->S.field("groups", S.array(group)),
+    })->S.Object.strict
   }
 }
 
@@ -167,6 +177,12 @@ module Blueprint = {
     order: int,
     description: string,
     elements: NonEmptyArray.t<element>,
+  }
+
+  type form = {
+    name: string,
+    description: string,
+    groups: NonEmptyArray.t<group>,
   }
 
   module Codec = {
@@ -246,7 +262,13 @@ module Blueprint = {
       name: o->S.field("name", S.string()),
       order: o->S.field("order", S.int()),
       description: o->S.field("description", S.string()),
-      elements: o->S.field("elements", S.array(element)->NonEmptyArray.Codec.array)
+      elements: o->S.field("elements", S.array(element)->NonEmptyArray.Codec.array),
+    })->S.Object.strict
+
+    let form = S.object(o => {
+      name: o->S.field("name", S.string()),
+      description: o->S.field("description", S.string()),
+      groups: o->S.field("groups", S.array(group)->NonEmptyArray.Codec.array),
     })->S.Object.strict
   }
 }
