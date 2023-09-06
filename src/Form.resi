@@ -3,7 +3,7 @@ module Data: {
 
   type meta = {name: string}
 
-  type t =
+  type element =
     | SelectSingle({selected: string, meta: meta})
     | SelectSingleOptional({selected: option<string>, meta: meta})
     | SelectMultiple({selected: NonEmptyArray.t<string>, meta: meta})
@@ -24,12 +24,12 @@ module Data: {
 
   type group = {
     name: string,
-    values: array<t>,
+    elements: array<element>,
   }
 
   module Codec: {
     let meta: S.t<meta>
-    let t: S.t<t>
+    let element: S.t<element>
     let group: S.t<group>
   }
 }
@@ -50,7 +50,7 @@ module Blueprint: {
     value: string,
   }
 
-  type t =
+  type element =
     | SelectSingle({placeholder: string, options: array<selectOption>, meta: meta})
     | SelectMultiple({placeholder: string, options: array<selectOption>, meta: meta})
     | Checkbox({meta: meta})
@@ -65,19 +65,19 @@ module Blueprint: {
     name: string,
     order: int,
     description: string,
-    elements: NonEmptyArray.t<t>,
+    elements: NonEmptyArray.t<element>,
   }
 
   module Codec: {
     let meta: S.t<meta>
     let selectOption: S.t<selectOption>
-    let t: S.t<t>
+    let element: S.t<element>
     let group: S.t<group>
   }
 }
 
 module type Interpreter = {
-  type t
+  type output
 
-  let interpret: Blueprint.t => t
+  let interpret: Blueprint.element => output
 }

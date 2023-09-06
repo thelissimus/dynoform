@@ -1,7 +1,7 @@
 module Data = {
   type meta = {name: string}
 
-  type t =
+  type element =
     | SelectSingle({selected: string, meta: meta})
     | SelectSingleOptional({selected: option<string>, meta: meta})
     | SelectMultiple({selected: NonEmptyArray.t<string>, meta: meta})
@@ -22,7 +22,7 @@ module Data = {
 
   type group = {
     name: string,
-    values: array<t>,
+    elements: array<element>,
   }
 
   module Codec = {
@@ -35,7 +35,7 @@ module Data = {
     @inline
     let discriminator = "kind"
 
-    let t = S.union([
+    let element = S.union([
       S.object(o => {
         o->S.field(discriminator, S.literal(String("SelectSingle")))->ignore
         SelectSingle({
@@ -132,7 +132,7 @@ module Data = {
 
     let group = S.object(o => {
       name: o->S.field("name", S.string()),
-      values: o->S.field("values", S.array(t))
+      elements: o->S.field("elements", S.array(element))
     })
   }
 }
@@ -151,7 +151,7 @@ module Blueprint = {
     value: string,
   }
 
-  type t =
+  type element =
     | SelectSingle({placeholder: string, options: array<selectOption>, meta: meta})
     | SelectMultiple({placeholder: string, options: array<selectOption>, meta: meta})
     | Checkbox({meta: meta})
@@ -166,7 +166,7 @@ module Blueprint = {
     name: string,
     order: int,
     description: string,
-    elements: NonEmptyArray.t<t>,
+    elements: NonEmptyArray.t<element>,
   }
 
   module Codec = {
@@ -188,7 +188,7 @@ module Blueprint = {
     @inline
     let discriminator = "kind"
 
-    let t = S.union([
+    let element = S.union([
       S.object(o => {
         o->S.field(discriminator, S.literal(String("SelectSingle")))->ignore
         SelectSingle({
@@ -246,13 +246,13 @@ module Blueprint = {
       name: o->S.field("name", S.string()),
       order: o->S.field("order", S.int()),
       description: o->S.field("description", S.string()),
-      elements: o->S.field("elements", S.array(t)->NonEmptyArray.Codec.array)
+      elements: o->S.field("elements", S.array(element)->NonEmptyArray.Codec.array)
     })->S.Object.strict
   }
 }
 
 module type Interpreter = {
-  type t
+  type output
 
-  let interpret: Blueprint.t => t
+  let interpret: Blueprint.element => output
 }

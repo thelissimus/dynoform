@@ -1,7 +1,7 @@
-module ForReact: Form.Interpreter with type t = React.element = {
+module ForReact: Form.Interpreter with type output = React.element = {
   open Form.Blueprint
 
-  type t = React.element
+  type output = React.element
 
   let interpret = e =>
     switch e {

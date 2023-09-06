@@ -1,1 +1,1 @@
-module ForReact: Form.Interpreter with type t = React.element
+module ForReact: Form.Interpreter with type output = React.element
