@@ -92,10 +92,15 @@ module ForReact: Form.Interpreter with type output = React.element = {
     </section>
 
   let interpret = f =>
-    <form onSubmit=ReactEvent.Form.preventDefault>
+    <form
+      onSubmit={e => {
+        ReactEvent.Form.preventDefault(e)
+        Console.log(e)
+      }}>
       {f.groups
       ->NonEmptyArray.toArray
       ->Belt.Array.mapWithIndexU((i, g) => interpretGroup({key: i->Int.toString, value: g}))
+      ->Belt.Array.concat([<button type_="submit"> {"Submit"->React.string} </button>])
       ->React.array}
     </form>
 }

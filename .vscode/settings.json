@@ -1,7 +1,9 @@
 {
+	"files.autoSave": "afterDelay",
+	"files.autoSaveDelay": 1000,
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.patterns": {
-		"*.res": "${capture}.resi, ${capture}.bs.mjs",
+		"*.res": "${capture}.resi, ${capture}.bs.mjs, ${capture}.gen.tsx",
 		"package.json": "pnpm-lock.yaml"
 	}
 }

@@ -14,6 +14,16 @@
 	],
 	"jsx": { "version": 4, "mode": "classic" },
 	"suffix": ".bs.mjs",
+	"gentypeconfig": {
+		"language": "typescript",
+		"shims": {},
+		"generatedFileExtension": ".gen.tsx",
+		"module": "es6",
+		"debug": {
+			"all": false,
+			"basic": false
+		}
+	},
 	"bsc-flags": ["-open RescriptCore"],
 	"bs-dependencies": ["@rescript/core", "@rescript/react", "rescript-webapi", "rescript-struct"]
 }
