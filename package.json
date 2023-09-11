@@ -1,19 +1,19 @@
 {
-  "name": "dynoform",
-  "private": true,
-  "version": "0.2.0",
-  "type": "module",
-  "scripts": {
-    "res:build": "rescript",
-    "res:clean": "rescript clean",
-    "res:dev": "rescript build -w"
-  },
-  "dependencies": {
-    "@rescript/core": "^0.5.0",
-    "@rescript/react": "^0.11.0",
-    "react": "^18.2.0",
-    "rescript": "11.0.0-rc.2",
-    "rescript-struct": "^4.1.1",
-    "rescript-webapi": "^0.9.0"
-  }
+	"name": "dynoform",
+	"private": true,
+	"version": "0.2.0",
+	"type": "module",
+	"scripts": {
+		"res:build": "rescript",
+		"res:clean": "rescript clean",
+		"res:dev": "rescript build -w"
+	},
+	"dependencies": {
+		"@rescript/core": "^0.5.0",
+		"@rescript/react": "^0.11.0",
+		"react": "^18.2.0",
+		"rescript": "11.0.0-rc.2",
+		"rescript-struct": "^5.0.1",
+		"rescript-webapi": "^0.9.0"
+	}
 }
