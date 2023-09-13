@@ -17,8 +17,8 @@ dependencies:
     specifier: 11.0.0-rc.2
     version: 11.0.0-rc.2
   rescript-struct:
-    specifier: ^4.1.1
-    version: 4.1.1(rescript@11.0.0-rc.2)
+    specifier: ^5.0.1
+    version: 5.0.1(rescript@11.0.0-rc.2)
   rescript-webapi:
     specifier: ^0.9.0
     version: 0.9.0
@@ -1343,10 +1343,10 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /rescript-struct@4.1.1(rescript@11.0.0-rc.2):
-    resolution: {integrity: sha512-LmlFhnAMeQEGZhQJoEC8Mk/P0GgEWVawmQB2fbV9+ILzyTSESogKS2NtP6jd3/82joG5Nxon6Ml0SjpQqVHYhA==}
+  /rescript-struct@5.0.1(rescript@11.0.0-rc.2):
+    resolution: {integrity: sha512-r3ev3InqPxaBSL/vlyMSHV1vUoVEW3yKZa9gPYgpDDznAky3v+UznFkdIBdRf9gJcTfCk9vvA+GyfePM7c37eA==}
     peerDependencies:
-      rescript: 10.1.x || ~11.0.0-alpha
+      rescript: 11.0.x || ~11.0.0-rc
     dependencies:
       rescript: 11.0.0-rc.2
     dev: false

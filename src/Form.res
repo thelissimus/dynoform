@@ -33,116 +33,116 @@ module Data = {
   module Codec = {
     open RescriptStruct
 
-    let meta = S.object(o => {
-      name: o->S.field("name", S.string()),
+    let meta = S.object(s => {
+      name: s.field("name", S.string),
     })->S.Object.strict
 
     @inline
     let discriminator = "kind"
 
     let element = S.union([
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectSingle")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "SelectSingle")
         SelectSingle({
-          selected: o->S.field("selected", S.string()),
-          meta: o->S.field("meta", meta),
+          selected: s.field("selected", S.string),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectSingleOptional")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "SelectSingleOptional")
         SelectSingleOptional({
-          selected: o->S.field("selected", S.option(S.string())),
-          meta: o->S.field("meta", meta),
+          selected: s.field("selected", S.option(S.string)),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectMultiple")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "SelectMultiple")
         SelectMultiple({
-          selected: o->S.field("selected", S.array(S.string())->NonEmptyArray.Codec.array),
-          meta: o->S.field("meta", meta),
+          selected: s.field("selected", S.array(S.string)->NonEmptyArray.Codec.array),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectMultipleOptional")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "SelectMultipleOptional")
         SelectMultipleOptional({
-          selected: o->S.field("selected", S.array(S.string())),
-          meta: o->S.field("meta", meta),
+          selected: s.field("selected", S.array(S.string)),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Checkbox")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Checkbox")
         Checkbox({
-          checked: o->S.field("checked", S.bool()),
-          meta: o->S.field("meta", meta),
+          checked: s.field("checked", S.bool),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Text")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Text")
         Text({
-          content: o->S.field("content", S.string()),
-          meta: o->S.field("meta", meta),
+          content: s.field("content", S.string),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("TextOptional")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "TextOptional")
         TextOptional({
-          content: o->S.field("content", S.option(S.string())),
-          meta: o->S.field("meta", meta),
+          content: s.field("content", S.option(S.string)),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Textarea")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Textarea")
         Textarea({
-          content: o->S.field("content", S.string()),
-          meta: o->S.field("meta", meta),
+          content: s.field("content", S.string),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("TextareaOptional")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "TextareaOptional")
         TextareaOptional({
-          content: o->S.field("content", S.option(S.string())),
-          meta: o->S.field("meta", meta),
+          content: s.field("content", S.option(S.string)),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Number")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Number")
         Number({
-          number: o->S.field("number", S.float()),
-          meta: o->S.field("meta", meta),
+          number: s.field("number", S.float),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("NumberOptional")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "NumberOptional")
         NumberOptional({
-          number: o->S.field("number", S.option(S.float())),
-          meta: o->S.field("meta", meta),
+          number: s.field("number", S.option(S.float)),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Date")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Date")
         Date({
-          date: o->S.field("date", S.string()->S.String.datetime()),
-          meta: o->S.field("meta", meta),
+          date: s.field("date", S.string->S.String.datetime),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("DateOptional")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "DateOptional")
         DateOptional({
-          date: o->S.field("date", S.option(S.string()->S.String.datetime())),
-          meta: o->S.field("meta", meta),
+          date: s.field("date", S.option(S.string->S.String.datetime)),
+          meta: s.field("meta", meta),
         })
       }),
       // TODO: Photo, File
     ])
 
-    let group = S.object(o => {
-      name: o->S.field("name", S.string()),
-      elements: o->S.field("elements", S.array(element)),
+    let group = S.object(s => {
+      name: s.field("name", S.string),
+      elements: s.field("elements", S.array(element)),
     })->S.Object.strict
 
-    let form = S.object(o => {
-      name: o->S.field("name", S.string()),
-      groups: o->S.field("groups", S.array(group)),
+    let form = S.object(s => {
+      name: s.field("name", S.string),
+      groups: s.field("groups", S.array(group)),
     })->S.Object.strict
   }
 }
@@ -188,87 +188,87 @@ module Blueprint = {
   module Codec = {
     open RescriptStruct
 
-    let meta = S.object(o => {
-      name: o->S.field("name", S.string()),
-      label: o->S.field("label", S.string()),
-      description: o->S.field("description", S.string()),
-      mustConfirm: o->S.field("mustConfirm", S.bool()),
-      required: o->S.field("required", S.bool()),
+    let meta = S.object(s => {
+      name: s.field("name", S.string),
+      label: s.field("label", S.string),
+      description: s.field("description", S.string),
+      mustConfirm: s.field("mustConfirm", S.bool),
+      required: s.field("required", S.bool),
     })->S.Object.strict
 
-    let selectOption = S.object(o => {
-      value: o->S.field("value", S.string()),
-      label: o->S.field("label", S.string()),
+    let selectOption = S.object(s => {
+      value: s.field("value", S.string),
+      label: s.field("label", S.string),
     })->S.Object.strict
 
     @inline
     let discriminator = "kind"
 
     let element = S.union([
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectSingle")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "SelectSingle")
         SelectSingle({
-          placeholder: o->S.field("placeholder", S.string()),
-          options: o->S.field("options", S.array(selectOption)),
-          meta: o->S.field("meta", meta),
+          placeholder: s.field("placeholder", S.string),
+          options: s.field("options", S.array(selectOption)),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("SelectMultiple")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "SelectMultiple")
         SelectMultiple({
-          placeholder: o->S.field("placeholder", S.string()),
-          options: o->S.field("options", S.array(selectOption)),
-          meta: o->S.field("meta", meta),
+          placeholder: s.field("placeholder", S.string),
+          options: s.field("options", S.array(selectOption)),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Checkbox")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Checkbox")
         Checkbox({
-          meta: o->S.field("meta", meta),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Text")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Text")
         Text({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
+          placeholder: s.field("placeholder", S.string),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Textarea")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Textarea")
         Textarea({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
+          placeholder: s.field("placeholder", S.string),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Number")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Number")
         Number({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
+          placeholder: s.field("placeholder", S.string),
+          meta: s.field("meta", meta),
         })
       }),
-      S.object(o => {
-        o->S.field(discriminator, S.literal(String("Date")))->ignore
+      S.object(s => {
+        s.tag(discriminator, "Date")
         Date({
-          placeholder: o->S.field("placeholder", S.string()),
-          meta: o->S.field("meta", meta),
+          placeholder: s.field("placeholder", S.string),
+          meta: s.field("meta", meta),
         })
       }),
       // TODO: Photo, File
     ])
 
-    let group = S.object(o => {
-      name: o->S.field("name", S.string()),
-      order: o->S.field("order", S.int()),
-      description: o->S.field("description", S.string()),
-      elements: o->S.field("elements", S.array(element)->NonEmptyArray.Codec.array),
+    let group = S.object(s => {
+      name: s.field("name", S.string),
+      order: s.field("order", S.int),
+      description: s.field("description", S.string),
+      elements: s.field("elements", S.array(element)->NonEmptyArray.Codec.array),
     })->S.Object.strict
 
-    let form = S.object(o => {
-      name: o->S.field("name", S.string()),
-      description: o->S.field("description", S.string()),
-      groups: o->S.field("groups", S.array(group)->NonEmptyArray.Codec.array),
+    let form = S.object(s => {
+      name: s.field("name", S.string),
+      description: s.field("description", S.string),
+      groups: s.field("groups", S.array(group)->NonEmptyArray.Codec.array),
     })->S.Object.strict
   }
 }
