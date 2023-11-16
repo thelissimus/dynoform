@@ -71,13 +71,13 @@ module Blueprint: {
     name: string,
     order: int,
     description: string,
-    elements: NonEmptyArray.t<element>,
+    elements: array<element>,
   }
 
   type form = {
     name: string,
     description: string,
-    groups: NonEmptyArray.t<group>,
+    groups: array<group>,
   }
 
   module Codec: {

@@ -1,3 +1,13 @@
+@@uncurried
+
+let arrayTraverseResult = (xs: array<result<'a, 'e>>, f: 'a => result<'b, 'e>): result<
+  array<'b>,
+  'e,
+> =>
+  xs->Array.reduce(Ok([]), (acc, curr) =>
+    acc->Result.flatMap(arr => curr->Result.flatMap(f)->Result.map(v => [v]->Array.concat(arr)))
+  )
+
 module ForReact: Form.Interpreter with type output = React.element = {
   open Form.Blueprint
 
@@ -15,10 +25,8 @@ module ForReact: Form.Interpreter with type output = React.element = {
         <label htmlFor=name> {label->React.string} </label>
         <select name multiple=false required>
           {options
-          ->Belt.Array.mapWithIndexU((i, {label, value}) =>
-            <option label value key={i->Int.toString} />
-          )
-          ->Belt.Array.concat([
+          ->Array.mapWithIndex(({label, value}, i) => <option label value key={i->Int.toString} />)
+          ->Array.concat([
             <option label=placeholder selected=true disabled=true hidden=true key="default" />,
           ])
           ->React.array}
@@ -30,10 +38,8 @@ module ForReact: Form.Interpreter with type output = React.element = {
         <label htmlFor=name> {label->React.string} </label>
         <select name multiple=true required>
           {options
-          ->Belt.Array.mapWithIndexU((i, {label, value}) =>
-            <option label value key={i->Int.toString} />
-          )
-          ->Belt.Array.concat([
+          ->Array.mapWithIndex(({label, value}, i) => <option label value key={i->Int.toString} />)
+          ->Array.concat([
             <option label=placeholder selected=true disabled=true hidden=true key="default" />,
           ])
           ->React.array}
@@ -86,21 +92,84 @@ module ForReact: Form.Interpreter with type output = React.element = {
   let interpretGroup = ({key, value: group}) =>
     <section key>
       {group.elements
-      ->NonEmptyArray.toArray
-      ->Belt.Array.mapWithIndexU((i, e) => interpretElement({key: i->Int.toString, value: e}))
+      ->Array.mapWithIndex((e, i) => interpretElement({key: i->Int.toString, value: e}))
       ->React.array}
     </section>
+
+  type evalErr = RequirementNotFulfuilled
 
   let interpret = f =>
     <form
       onSubmit={e => {
+        module FD = Form.Data
+
         ReactEvent.Form.preventDefault(e)
-        Console.log(e)
+
+        let res: FD.form = {
+          name: f.name,
+          groups: f.groups->Array.map(({name, elements}): FD.group => {
+            name,
+            elements: elements
+            ->Array.map(elem => {
+              let get = (name, prop) =>
+                ReactEvent.Form.target(e)["elements"]
+                ->Js.Dict.get(name)
+                ->Option.flatMap(o => o->Js.Dict.get(prop))
+              let getVal = name => name->get("value")
+              let getChecked = name => name->get("checked")
+
+              switch elem {
+              | SelectSingle({meta: {name, required}}) =>
+                if required {
+                  getVal(name)->Option.mapWithDefault(
+                    Error(RequirementNotFulfuilled),
+                    v => Ok(FD.SelectSingle({selected: v, meta: {name: name}})),
+                  )
+                } else {
+                  getVal(name)->Option.mapWithDefault(
+                    Error(RequirementNotFulfuilled),
+                    v => Ok(FD.SelectSingleOptional({selected: Some(v), meta: {name: name}})),
+                  )
+                }
+              | Text({meta: {name, required}}) =>
+                if required {
+                  getVal(name)->Option.mapWithDefault(
+                    Error(RequirementNotFulfuilled),
+                    v => Ok(FD.Text({content: v, meta: {name: name}})),
+                  )
+                } else {
+                  getVal(name)->Option.mapWithDefault(
+                    Error(RequirementNotFulfuilled),
+                    v => Ok(FD.TextOptional({content: Some(v), meta: {name: name}})),
+                  )
+                }
+              | Checkbox({meta: {name, required}}) =>
+                if required {
+                  getChecked(name)->Option.mapWithDefault(
+                    Error(RequirementNotFulfuilled),
+                    v => Ok(FD.Checkbox({checked: v, meta: {name: name}})),
+                  )
+                } else {
+                  getChecked(name)->Option.mapWithDefault(
+                    Error(RequirementNotFulfuilled),
+                    v => Ok(FD.Checkbox({checked: v, meta: {name: name}})),
+                  )
+                }
+              | _ => Error(RequirementNotFulfuilled)
+              }
+            })
+            ->arrayTraverseResult(x => Ok(x))
+            ->Result.getExn,
+          }),
+        }
+        open RescriptStruct
+
+        let _ =
+          res->S.serializeToJsonStringWith(Form.Data.Codec.form, ~space=2)->Result.map(Console.log)
       }}>
       {f.groups
-      ->NonEmptyArray.toArray
-      ->Belt.Array.mapWithIndexU((i, g) => interpretGroup({key: i->Int.toString, value: g}))
-      ->Belt.Array.concat([<button type_="submit"> {"Submit"->React.string} </button>])
+      ->Array.mapWithIndex((g, i) => interpretGroup({key: i->Int.toString, value: g}))
+      ->Array.concat([<button type_="submit"> {"Submit"->React.string} </button>])
       ->React.array}
     </form>
 }

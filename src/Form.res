@@ -176,13 +176,13 @@ module Blueprint = {
     name: string,
     order: int,
     description: string,
-    elements: NonEmptyArray.t<element>,
+    elements: array<element>,
   }
 
   type form = {
     name: string,
     description: string,
-    groups: NonEmptyArray.t<group>,
+    groups: array<group>,
   }
 
   module Codec = {
@@ -262,13 +262,13 @@ module Blueprint = {
       name: s.field("name", S.string),
       order: s.field("order", S.int),
       description: s.field("description", S.string),
-      elements: s.field("elements", S.array(element)->NonEmptyArray.Codec.array),
+      elements: s.field("elements", S.array(element)),
     })->S.Object.strict
 
     let form = S.object(s => {
       name: s.field("name", S.string),
       description: s.field("description", S.string),
-      groups: s.field("groups", S.array(group)->NonEmptyArray.Codec.array),
+      groups: s.field("groups", S.array(group)),
     })->S.Object.strict
   }
 }
